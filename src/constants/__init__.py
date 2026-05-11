@@ -18,6 +18,8 @@ TRAIN_FILE_NAME                         = "train.csv"
 TEST_FILE_NAME                          = "test.csv"
 FILE_NAME                               = "data.csv"
 
+SCHEMA_FILE_PATH = os.path.join("config", "schema.yaml")
+
 # Data Validation
 DATA_VALIDATION_DIR                     = "data_validation"
 DATA_VALIDATION_VALID_DIR               = "validated"
