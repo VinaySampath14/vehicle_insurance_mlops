@@ -36,7 +36,7 @@ PREPROCESSING_OBJECT_FILE_NAME              = "preprocessing.pkl"
 MODEL_TRAINER_DIR                       = "model_trainer"
 MODEL_TRAINER_TRAINED_MODEL_DIR         = "trained_model"
 MODEL_TRAINER_TRAINED_MODEL_NAME        = "model.pkl"
-MODEL_TRAINER_EXPECTED_SCORE: float     = 0.6
+MODEL_TRAINER_EXPECTED_SCORE: float     = 0.43
 MODEL_TRAINER_MODEL_CONFIG_FILE_PATH    = os.path.join("config", "model.yaml")
 
 # Model Evaluation

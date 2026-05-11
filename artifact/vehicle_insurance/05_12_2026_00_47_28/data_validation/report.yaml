@@ -1,0 +1,27 @@
+Age:
+  drift_status: false
+  p_value: 0.9990300804920978
+Annual_Premium:
+  drift_status: true
+  p_value: 0.002622003439586552
+Driving_License:
+  drift_status: false
+  p_value: 1.0
+Policy_Sales_Channel:
+  drift_status: false
+  p_value: 0.9967173865363975
+Previously_Insured:
+  drift_status: false
+  p_value: 1.0
+Region_Code:
+  drift_status: false
+  p_value: 0.9753648710105497
+Response:
+  drift_status: false
+  p_value: 1.0
+Vintage:
+  drift_status: false
+  p_value: 0.6622586637849238
+id:
+  drift_status: false
+  p_value: 0.058094401629081194

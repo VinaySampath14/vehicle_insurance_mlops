@@ -52,6 +52,7 @@ class DataIngestion:
                 dataframe,
                 test_size=self.data_ingestion_config.train_test_split_ratio,
                 random_state=42,
+                stratify=dataframe["Response"],
             )
 
             for path, split in [
