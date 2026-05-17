@@ -43,7 +43,7 @@ MODEL_TRAINER_MODEL_CONFIG_FILE_PATH    = os.path.join("config", "model.yaml")
 MODEL_EVALUATION_DIR                            = "model_evaluation"
 MODEL_EVALUATION_CHANGED_THRESHOLD_SCORE: float = 0.02
 MODEL_EVALUATION_REPORT_NAME                    = "report.yaml"
-MODEL_BUCKET_NAME                               = "my-model-mlopsproj"
+MODEL_BUCKET_NAME                               = "mlopsproj1-bucket"
 MODEL_PUSHER_S3_KEY                             = "model-registry"
 
 # Model Pusher
