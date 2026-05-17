@@ -70,6 +70,10 @@ jobs:
           ECR_REGISTRY: ${{ secrets.AWS_ECR_LOGIN_URI }}
           ECR_REPOSITORY: ${{ secrets.ECR_REPOSITORY_NAME }}
           IMAGE_TAG: latest
+          APP_AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          APP_AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          APP_AWS_REGION: ${{ secrets.AWS_REGION }}
+          APP_MONGODB_URL: ${{ secrets.MONGODB_URL }}
         run: |
           docker stop vehicle-insurance || true
           docker rm vehicle-insurance || true
@@ -77,8 +81,8 @@ jobs:
           docker run -d \
             --name vehicle-insurance \
             -p 8080:8080 \
-            -e AWS_ACCESS_KEY_ID=${{ secrets.AWS_ACCESS_KEY_ID }} \
-            -e AWS_SECRET_ACCESS_KEY=${{ secrets.AWS_SECRET_ACCESS_KEY }} \
-            -e AWS_REGION=${{ secrets.AWS_REGION }} \
-            -e MONGODB_URL="${{ secrets.MONGODB_URL }}" \
+            -e AWS_ACCESS_KEY_ID="$APP_AWS_ACCESS_KEY_ID" \
+            -e AWS_SECRET_ACCESS_KEY="$APP_AWS_SECRET_ACCESS_KEY" \
+            -e AWS_REGION="$APP_AWS_REGION" \
+            -e MONGODB_URL="$APP_MONGODB_URL" \
             $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
