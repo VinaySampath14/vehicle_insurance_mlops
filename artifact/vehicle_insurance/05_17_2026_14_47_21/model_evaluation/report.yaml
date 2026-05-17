@@ -1,0 +1,10 @@
+best_model_path: artifact\vehicle_insurance\05_17_2026_14_47_21\model_trainer\trained_model\model.pkl
+improved_accuracy: 0.0
+is_model_accepted: true
+test_model_f1: 0.43476512428682734
+test_model_precision: 0.2840860568237806
+test_model_recall: 0.9258188824662813
+train_model_f1: 0.438673636929813
+train_model_precision: 0.28674348029903035
+train_model_recall: 0.9330443159922929
+trained_model_path: artifact\vehicle_insurance\05_17_2026_14_47_21\model_trainer\trained_model\model.pkl
