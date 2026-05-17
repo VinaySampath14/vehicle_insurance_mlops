@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>Vehicle Insurance Prediction</title>
+    <style>
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body { font-family: Arial, sans-serif; background: #f4f6f9; display: flex; justify-content: center; align-items: center; min-height: 100vh; padding: 20px; }
+        .card { background: white; border-radius: 10px; box-shadow: 0 4px 16px rgba(0,0,0,0.1); padding: 36px; width: 100%; max-width: 560px; }
+        h1 { text-align: center; color: #2c3e50; margin-bottom: 24px; font-size: 1.5rem; }
+        label { display: block; margin-bottom: 4px; font-size: 0.85rem; color: #555; font-weight: bold; }
+        input, select { width: 100%; padding: 10px 12px; border: 1px solid #ccc; border-radius: 6px; margin-bottom: 16px; font-size: 0.95rem; }
+        input:focus, select:focus { outline: none; border-color: #3498db; }
+        button { width: 100%; padding: 12px; background: #3498db; color: white; border: none; border-radius: 6px; font-size: 1rem; cursor: pointer; font-weight: bold; }
+        button:hover { background: #2980b9; }
+        .result { margin-top: 20px; padding: 16px; border-radius: 6px; text-align: center; font-size: 1.1rem; font-weight: bold; display: none; }
+        .result.interested { background: #d4edda; color: #155724; border: 1px solid #c3e6cb; }
+        .result.not-interested { background: #f8d7da; color: #721c24; border: 1px solid #f5c6cb; }
+    </style>
+</head>
+<body>
+    <div class="card">
+        <h1>Vehicle Insurance Cross-Sell Predictor</h1>
+        <form id="predForm">
+            <label>Gender</label>
+            <select name="gender" required>
+                <option value="">Select</option>
+                <option value="Male">Male</option>
+                <option value="Female">Female</option>
+            </select>
+
+            <label>Age</label>
+            <input type="number" name="age" min="18" max="100" placeholder="e.g. 35" required />
+
+            <label>Driving License (1 = Yes, 0 = No)</label>
+            <select name="driving_license" required>
+                <option value="">Select</option>
+                <option value="1">Yes</option>
+                <option value="0">No</option>
+            </select>
+
+            <label>Region Code</label>
+            <input type="number" step="0.1" name="region_code" placeholder="e.g. 28" required />
+
+            <label>Previously Insured (1 = Yes, 0 = No)</label>
+            <select name="previously_insured" required>
+                <option value="">Select</option>
+                <option value="1">Yes</option>
+                <option value="0">No</option>
+            </select>
+
+            <label>Vehicle Age</label>
+            <select name="vehicle_age" required>
+                <option value="">Select</option>
+                <option value="< 1 Year">Less than 1 Year</option>
+                <option value="1-2 Year">1-2 Years</option>
+                <option value="> 2 Years">More than 2 Years</option>
+            </select>
+
+            <label>Vehicle Damage</label>
+            <select name="vehicle_damage" required>
+                <option value="">Select</option>
+                <option value="Yes">Yes</option>
+                <option value="No">No</option>
+            </select>
+
+            <label>Annual Premium (₹)</label>
+            <input type="number" step="0.01" name="annual_premium" placeholder="e.g. 30000" required />
+
+            <label>Policy Sales Channel</label>
+            <input type="number" step="0.1" name="policy_sales_channel" placeholder="e.g. 26" required />
+
+            <label>Vintage (Days with company)</label>
+            <input type="number" name="vintage" placeholder="e.g. 150" required />
+
+            <button type="submit">Predict</button>
+        </form>
+
+        <div class="result" id="result"></div>
+    </div>
+
+    <script>
+        document.getElementById('predForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const form = e.target;
+            const data = {
+                gender: form.gender.value,
+                age: parseInt(form.age.value),
+                driving_license: parseInt(form.driving_license.value),
+                region_code: parseFloat(form.region_code.value),
+                previously_insured: parseInt(form.previously_insured.value),
+                vehicle_age: form.vehicle_age.value,
+                vehicle_damage: form.vehicle_damage.value,
+                annual_premium: parseFloat(form.annual_premium.value),
+                policy_sales_channel: parseFloat(form.policy_sales_channel.value),
+                vintage: parseInt(form.vintage.value),
+            };
+
+            const res = await fetch('/predict', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(data),
+            });
+
+            const json = await res.json();
+            const resultDiv = document.getElementById('result');
+            resultDiv.style.display = 'block';
+
+            if (json.prediction === 1) {
+                resultDiv.className = 'result interested';
+                resultDiv.textContent = 'Customer is INTERESTED in vehicle insurance.';
+            } else {
+                resultDiv.className = 'result not-interested';
+                resultDiv.textContent = 'Customer is NOT interested in vehicle insurance.';
+            }
+        });
+    </script>
+</body>
+</html>
