@@ -1,0 +1,35 @@
+# Python
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.Python
+*.egg-info/
+dist/
+build/
+
+# Virtual environments
+.venv/
+venv/
+env/
+vehicle/
+
+# Jupyter
+.ipynb_checkpoints/
+*.ipynb
+
+# Artifacts (generated at runtime, not needed in image)
+artifact/
+saved_models/
+logs/
+
+# Git
+.git/
+.gitignore
+
+# Environment variables (NEVER ship secrets inside Docker image)
+.env
+
+# IDE
+.vscode/
+.idea/
