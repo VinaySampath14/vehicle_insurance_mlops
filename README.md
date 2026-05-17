@@ -4,13 +4,9 @@ A production-grade MLOps pipeline that predicts whether a health insurance custo
 
 **Live Demo:** [http://3.87.31.9:8080](http://3.87.31.9:8080)
 
----
-
 ## The Problem
 
 Insurance companies have millions of existing health insurance customers. Reaching out to all of them to sell vehicle insurance is expensive and inefficient. This project builds a machine learning model that identifies which customers are actually likely to say yes — so the sales team can focus their efforts where it counts.
-
----
 
 ## What Makes This MLOps
 
@@ -21,8 +17,6 @@ This isn't just a Jupyter notebook. Every component mirrors how ML systems are b
 - **Cloud model registry** — trained models are versioned and stored in AWS S3, not on someone's laptop
 - **Zero-downtime deployments** — every push to GitHub automatically builds, containerizes, and deploys the updated app to EC2 without any manual steps
 - **Reproducible environments** — Docker ensures the app runs identically in development and production
-
----
 
 ## Tech Stack
 
@@ -37,8 +31,6 @@ This isn't just a Jupyter notebook. Every component mirrors how ML systems are b
 | Cloud Server | AWS EC2 |
 | CI/CD | GitHub Actions |
 
----
-
 ## ML Pipeline
 
 ```mermaid
@@ -52,8 +44,6 @@ flowchart LR
     F -->|below threshold| H[Keep Production Model]
     G --> I[Model Pusher]
 ```
-
----
 
 ## CI/CD Pipeline
 
@@ -70,8 +60,6 @@ flowchart LR
 ```
 
 Every code change is automatically tested, built, and deployed. No manual SSH. No manual restarts.
-
----
 
 ## Architecture
 
@@ -115,23 +103,13 @@ flowchart TB
     L -->|auto deploy| K
 ```
 
----
+## Some Decisions Worth Explaining
 
-## Key Design Decisions
+**XGBoost over other models** — The dataset is heavily imbalanced, only about 12% of customers actually respond yes. I tried logistic regression and random forest during experimentation but XGBoost consistently gave better F1 scores on the minority class without needing much manual tuning.
 
-**Why XGBoost?**
-The dataset is highly imbalanced — only ~12% of customers are interested. XGBoost handles class imbalance better than logistic regression and outperformed other candidates during experimentation.
+**The evaluation gate** — This took some thought. The naive approach is to just always deploy the newest model. But what happens when training runs on bad data, or someone tweaks the preprocessing and breaks something? The gate compares the new model against whatever is currently in S3 and only swaps it in if the F1 improves by at least 2%. It's a small safety net that prevents silent model degradation.
 
-**Why the evaluation gate?**
-Without it, a poorly trained model (due to bad data or a bug) could silently replace a working production model. The gate enforces a minimum F1 improvement threshold before any model goes live.
 
-**Why Docker?**
-ML projects are notorious for "works on my machine" failures. Containerizing the app guarantees the exact same Python version, package versions, and environment on every machine it runs on.
-
-**Why self-hosted runner on EC2?**
-GitHub-hosted runners can't directly deploy to a private EC2 instance. The self-hosted runner runs on EC2 itself — it listens for jobs and deploys locally, keeping the deployment fast and secure.
-
----
 
 ## API Endpoints
 
@@ -142,17 +120,12 @@ GitHub-hosted runners can't directly deploy to a private EC2 instance. The self-
 | `/train` | GET | Triggers the full training pipeline |
 | `/docs` | GET | Interactive Swagger API documentation |
 
----
-
 ## Dataset
 
 The dataset contains ~380,000 records of existing health insurance customers with features including age, vehicle age, prior damage history, annual premium, and sales channel. The target variable (`Response`) indicates whether the customer expressed interest in vehicle insurance.
 
-Source: [Kaggle — Health Insurance Cross Sell Prediction](https://www.kaggle.com/datasets/anmolkumar/health-insurance-cross-sell-prediction)
-
----
 
 ## Author
 
 **Vinay Sampath Kumar Vudumula**
-[GitHub](https://github.com/VinaySampath14) · [LinkedIn](https://linkedin.com/in/vinay-sampath-kumar-vudumula)
+[GitHub](https://github.com/VinaySampath14) 
