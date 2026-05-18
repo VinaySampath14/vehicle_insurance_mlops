@@ -107,7 +107,7 @@ flowchart TB
 
 **XGBoost over other models** - The dataset is heavily imbalanced, only about 12% of customers actually respond yes. I tried logistic regression and random forest during experimentation but XGBoost consistently gave better F1 scores on the minority class without needing much manual tuning.
 
-**The evaluation gate** - This took some thought. The naive approach is to just always deploy the newest model. But what happens when training runs on bad data, or someone tweaks the preprocessing and breaks something? The gate compares the new model against whatever is currently in S3 and only swaps it in if the F1 improves by at least 2%. It's a small safety net that prevents silent model degradation.
+**The evaluation gate** - The naive approach is to just always deploy the newest model. But what happens when training runs on bad data, or someone tweaks the preprocessing and breaks something? The gate compares the new model against whatever is currently in S3 and only swaps it in if the F1 improves by at least 2%. It's a small safety net that prevents silent model degradation.
 
 
 
